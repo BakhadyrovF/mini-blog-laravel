@@ -23,14 +23,6 @@
                     <p class="text-red-500">{{$message}}</p>
                 @enderror
 
-                <div>
-                    <a href="#" class="font-medium text-blue-900 hover:bg-blue-300 rounded-md p-2">Забыли пароль?</a>
-                </div>
-
-                <div>
-                    <a href="{{route("register")}}" class="font-medium text-blue-900 hover:bg-blue-300 rounded-md p-2">Sign Up</a>
-                </div>
-
                 <button type="submit" class="text-center w-full bg-blue-900 rounded-md text-white py-3 font-medium">Submit</button>
         </form>
     </div>

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\EditFormRequest;
+use App\Http\Requests\Admin\PostFormRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -29,30 +31,27 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view("admin.posts.create");
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostFormRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $imageName = time() . "." . $request->image->extension();
+        $request->image->storeAs("public/posts", $imageName);
+        $data["image"] = $imageName;
+
+        Post::create($data);
+
+        return redirect(route("admin.posts.index"));
+
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -62,7 +61,11 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::findOrFail($id);
+
+        return view("admin.posts.edit", [
+            "post" => $post
+        ]);
     }
 
     /**
@@ -72,9 +75,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditFormRequest $request, $id)
     {
-        //
+        
     }
 
     /**
