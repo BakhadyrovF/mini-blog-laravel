@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,5 +18,16 @@ use Illuminate\Support\Facades\Route;
 Route::get("/", [PostController::class, "showHomeForm"])->name("home");
 Route::get("/posts", [PostController::class, "showPostsForm"])->name("posts");
 Route::get("/posts/{id}", [PostController::class, "showPostForm"])->name("posts_id");
+
+Route::get("/login", [AuthController::class, "showLoginForm"])->name("login");
+Route::post("/login_proccess", [AuthController::class, "login"])->name("login_proccess");
+Route::get("/logout", [AuthController::class, "logout"])->name("logout");
+
+
+Route::get("/register", [AuthController::class, "showRegisterForm"])->name("register");
+Route::post("/register_proccess", [AuthController::class, "register"])->name("register_proccess");
+
+
+
 
 

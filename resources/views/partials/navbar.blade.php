@@ -5,8 +5,17 @@
         <span class="text-xs text-grey-dark">Уроки от CutCode</span>
 
     </div>
+    @auth("web")
+        <div class="sm:mb-0 self-center">
+            <a href="{{route("logout")}}" class="text-md no-underline text-grey-darker hover:text-blue-dark ml-2 px-1">Log Out</a>
+        </div>
+    @endauth
 
-    <div class="sm:mb-0 self-center">
-        <a href="#" class="text-md no-underline text-grey-darker hover:text-blue-dark ml-2 px-1">Войти</a>
-    </div>
+    @guest("web")
+        <div class="sm:mb-0 self-center">
+            <a href="{{route("login")}}" class="text-md no-underline text-grey-darker hover:text-blue-dark ml-2 px-1">Log In</a>
+        </div>
+    @endguest
+
+
 </nav>
