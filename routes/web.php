@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware("auth")->group(function()
+Route::middleware("auth:web")->group(function()
 {
     Route::post("/posts/comment/{id}", [PostController::class, "comment"])->name("comment");
     Route::get("/logout", [AuthController::class, "logout"])->name("logout");
@@ -28,7 +28,7 @@ Route::get("/posts", [PostController::class, "showPostsForm"])->name("posts");
 Route::get("/posts/{id}", [PostController::class, "showPostForm"])->name("posts_id");
 
 
-Route::middleware("guest")->group(function()
+Route::middleware("guest:web")->group(function()
 {
     Route::get("/login", [AuthController::class, "showLoginForm"])->name("login");
     Route::post("/login_proccess", [AuthController::class, "login"])->name("login_proccess");
