@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\EditFormRequest;
 use App\Http\Requests\Admin\PostFormRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -77,7 +78,26 @@ class PostController extends Controller
      */
     public function update(EditFormRequest $request, $id)
     {
-        
+        $post = Post::findOrFail($id);
+        $data = $request->validated();
+
+
+        if($request->has("image"))
+        {
+            $imageName = time() . "." . $request->image->extension();
+            $request->image->storeAs("public/posts", $imageName);
+            $data["image"] = $imageName;
+            Storage::delete("public\posts/$post->image");
+            $post->update($data);
+            return redirect(route("admin.posts.index"));
+        }
+
+        $data["image"] = $post->image;
+        $post->update($data);
+        return redirect(route("admin.posts.index"));
+
+
+
     }
 
     /**
