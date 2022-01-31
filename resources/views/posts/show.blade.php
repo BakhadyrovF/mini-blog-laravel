@@ -22,22 +22,29 @@
 
     <div>
         <section class="rounded-b-lg mt-4">
-            <form>
-                <textarea class="w-full shadow-inner p-4 border-0 mb-4 rounded-lg focus:shadow-outline text-2xl" placeholder="Ваш комментарий..." spellcheck="false"></textarea>
+            <form action="{{route("comment", $post->id)}}" method="POST">
+                @csrf
+
+                <textarea name="text" class="w-full shadow-inner p-4 border-0 @error("text")
+                    border-red-500
+                @enderror   mb-4 rounded-lg focus:shadow-outline text-2xl" placeholder="Ваш комментарий..." spellcheck="false"></textarea>
+                    @error("text")
+                        <p class="text-red-500">{{$message}}</p>
+                    @enderror
+
                 <button type="submit" class="font-bold py-2 px-4 w-full bg-purple-400 text-lg text-white shadow-md rounded-lg ">Написать </button>
             </form>
 
             <div id="task-comments" class="pt-4">
-                <!--     comment-->
+                @foreach ($post->comment as $comment)
+
                 <div class="bg-white rounded-lg p-3  flex flex-col justify-center items-center md:items-start shadow-lg mb-4">
                     <div class="flex flex-row justify-center mr-2">
-                        <h3 class="text-purple-600 font-semibold text-lg text-center md:text-left ">Иванов Иван</h3>
+                        <h3 class="text-purple-600 font-semibold text-lg text-center md:text-left ">{{$comment->user->name}}</h3>
                     </div>
-
-
-                    <p style="width: 90%" class="text-gray-600 text-lg text-center md:text-left ">Отличная статья</p>
+                    <p style="width: 90%" class="text-gray-600 text-lg text-center md:text-left ">{{$comment->text}}</p>
                 </div>
-                <!--  comment end-->
+                @endforeach
             </div>
         </section>
 

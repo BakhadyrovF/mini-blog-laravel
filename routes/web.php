@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware("auth")->group(function()
 {
-
+    Route::post("/posts/comment/{id}", [PostController::class, "comment"])->name("comment");
     Route::get("/logout", [AuthController::class, "logout"])->name("logout");
 });
 
