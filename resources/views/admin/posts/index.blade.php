@@ -1,6 +1,7 @@
 @extends("layouts.admin")
 @section("title", "Posts")
 
+
 @section("content")
 
 <div class="container mx-auto px-6 py-8">
@@ -32,7 +33,11 @@
 
                             <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium">
                                 <a href="{{route("admin.posts.edit", $post->id)}}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                                <a href="#" class="text-red-600 hover:text-red-900">Delete</a>
+                                <form action="{{route("admin.posts.destroy", $post->id)}}" method="post">
+                                    @csrf
+                                    @method("DELETE")
+                                    <button type="submit" class="text-red-600 hover:text-red-900">Delete</a>
+                                </form>
                             </td>
                         </tr>
                     </tbody>

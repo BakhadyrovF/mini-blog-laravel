@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\EditFormRequest;
 use App\Http\Requests\Admin\PostFormRequest;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -100,6 +101,7 @@ class PostController extends Controller
 
     }
 
+
     /**
      * Remove the specified resource from storage.
      *
@@ -108,6 +110,11 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::findOrFail($id);
+
+        $post->delete($id);
+        Storage::delete("public/posts/$post->image");
+
+        return redirect(route("admin.posts.index"));
     }
 }
