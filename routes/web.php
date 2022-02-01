@@ -30,10 +30,14 @@ Route::get("/contact", [PostController::class, "showContactForm"])->name("contac
 Route::post("/contact_proccess", [PostController::class, "contact"])->name("contact_proccess");
 
 
+
 Route::middleware("guest:web")->group(function()
 {
     Route::get("/login", [AuthController::class, "showLoginForm"])->name("login");
     Route::post("/login_proccess", [AuthController::class, "login"])->name("login_proccess");
+
+    Route::get("/forgot", [AuthController::class, "showForgotForm"])->name("forgot");
+    Route::post("/forgot_proccess", [AuthController::class, "forgot"])->name("forgot_proccess");
 
     Route::get("/register", [AuthController::class, "showRegisterForm"])->name("register");
     Route::post("/register_proccess", [AuthController::class, "register"])->name("register_proccess");

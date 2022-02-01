@@ -48,4 +48,9 @@ class AuthController extends Controller
 
         return redirect(route("home"));
     }
+
+    public function showForgotForm()
+    {
+        return view()
+    }
 }
