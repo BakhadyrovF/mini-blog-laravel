@@ -26,6 +26,8 @@ Route::middleware("auth:web")->group(function()
 Route::get("/", [PostController::class, "showHomeForm"])->name("home");
 Route::get("/posts", [PostController::class, "showPostsForm"])->name("posts");
 Route::get("/posts/{id}", [PostController::class, "showPostForm"])->name("posts_id");
+Route::get("/contact", [PostController::class, "showContactForm"])->name("contact");
+Route::post("/contact_proccess", [PostController::class, "contact"])->name("contact_proccess");
 
 
 Route::middleware("guest:web")->group(function()

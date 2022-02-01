@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CommentFormRequest;
 use App\Http\Requests\ContactFormRequest;
+use App\Mail\ContactFormMail;
 use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class PostController extends Controller
 {
@@ -36,12 +39,29 @@ class PostController extends Controller
         ]);
     }
 
-    public function comment(ContactFormRequest $request, $id)
+    public function comment(CommentFormRequest $request, $id)
     {
         $post = Post::findOrFail($id);
 
         $post->comment()->create($request->validated());
 
         return redirect(route("posts_id", $id));
+    }
+
+    public function showContactForm()
+    {
+        return view("contact");
+    }
+
+    public function contact(ContactFormRequest $request)
+    {
+        $data = $request->validated();
+
+        Mail::to("bakhadyrovf@gmail.com")->send(new ContactFormMail($data));
+
+        return redirect(route("home"));
+
+
+
     }
 }

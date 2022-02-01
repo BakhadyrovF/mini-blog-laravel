@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ContactFormRequest extends FormRequest
+class CommentFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class ContactFormRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth("web")->check();
     }
 
     /**
@@ -25,10 +25,15 @@ class ContactFormRequest extends FormRequest
     {
         return [
             "text" => ["min:3", "string"],
-            "email" => ["required", "email"],
+            "user_id" => ["required", "exists:users,id"],
         ];
 
     }
 
-
+    public function prepareForValidation()
+    {
+        $this->merge([
+            "user_id" => auth("web")->id()
+        ]);
+    }
 }
