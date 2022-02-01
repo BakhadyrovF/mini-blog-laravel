@@ -13,7 +13,7 @@ class ForgotFormRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return auth("web")->guest();
     }
 
     /**
@@ -24,7 +24,7 @@ class ForgotFormRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "email" => ["required",  "email", "exists:users,email"]
         ];
     }
 }
